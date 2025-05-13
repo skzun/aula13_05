@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <script>
+        let atual = 0;
+        let acumulador = 0;
+        let operacao = null;
+
+        window.onload = inicio;
+
+        function inicio() {
+            const visor = document.getElementById('visor');
+            visor.textContent = atual;
+
+
+            for (let i = 0; i <= 9; i++) {
+                const botao = document.getElementById('botao' + i);
+                botao.addEventListener('click', () => inserirNumero(i));
+            }
+
+            document.getElementById('botaoSoma').addEventListener('click', () => definirOperacao('+'));
+            document.getElementById('botaoSubtracao').addEventListener('click', () => definirOperacao('-'));
+            document.getElementById('botaoMultiplicacao').addEventListener('click', () => definirOperacao('*'));
+            document.getElementById('botaoIgual').addEventListener('click', calcular);
+        }
+
+        function inserirNumero(numero) {
+            atual = atual * 10 + numero;
+            atualizarVisor();
+        }
+
+        function definirOperacao(op) {
+            acumulador = atual;
+            atual = 0;
+            operacao = op;
+            atualizarVisor();
+        }
+
+        function calcular() {
+            if (operacao === '+') {
+                atual = acumulador + atual;
+            } else if (operacao === '-') {
+                atual = acumulador - atual;
+            } else if (operacao === '*') {
+                atual = acumulador * atual;
+            }
+            operacao = null;
+            atualizarVisor();
+        }
+
+        function atualizarVisor() {
+            document.getElementById('visor').textContent = atual;
+        }
+    </script>
+</head>
+<body>
+    <p id="visor"></p>
+    <div id="botoes">
+
+        <input type="button" value="0" id="botao0">
+        <input type="button" value="1" id="botao1">
+        <input type="button" value="2" id="botao2">
+        <input type="button" value="3" id="botao3">
+        <input type="button" value="4" id="botao4">
+        <input type="button" value="5" id="botao5">
+        <input type="button" value="6" id="botao6">
+        <input type="button" value="7" id="botao7">
+        <input type="button" value="8" id="botao8">
+        <input type="button" value="9" id="botao9">
+        <br>
+        <input type="button" value="+" id="botaoSoma">
+        <input type="button" value="-" id="botaoSubtracao">
+        <input type="button" value="*" id="botaoMultiplicacao">
+        <input type="button" value="=" id="botaoIgual">
+    </div>
+</body>
+</html>
