@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <script>
+        let atual = '';  
+        let operador = null; 
+        let valorAnterior = null; 
+
+        window.onload = inicio;
+
+    
+        function inicio() {
+       
+            var visor = document.getElementById('visor');
+            visor.value = atual;
+
+            for (let i = 0; i <= 9; i++) {
+                document.getElementById(`botao${i}`).addEventListener('click', () => adicionarNumero(i));
+            }
+
+           
+            document.getElementById('botaoSoma').addEventListener('click', () => setOperador('+'));
+            document.getElementById('botaoSubtracao').addEventListener('click', () => setOperador('-'));
+            document.getElementById('botaoMultiplicacao').addEventListener('click', () => setOperador('*'));
+            document.getElementById('botaoDivisao').addEventListener('click', () => setOperador('/'));
+
+        
+            document.getElementById('botaoPonto').addEventListener('click', adicionarPonto);
+
+            
+            document.getElementById('botaoIgual').addEventListener('click', calcular);
+            
+   
+            document.getElementById('botaoLimpar').addEventListener('click', limpar);
+        }
+
+        function adicionarNumero(numero) {
+            atual += numero;  
+            atualizarVisor();
+        }
+
+
+        function adicionarPonto() {
+         
+            if (!atual.includes(".")) {
+                atual += "."; 
+            }
+            atualizarVisor();
+        }
+
+
+        function setOperador(op) {
+            operador = op;
+            valorAnterior = atual;  
+            atual = ''; 
+        }
+
+        function calcular() {
+            if (valorAnterior !== null && atual !== '') {
+                let resultado;
+                let num1 = parseFloat(valorAnterior);
+                let num2 = parseFloat(atual);
+                switch (operador) {
+                    case '+':
+                        resultado = num1 + num2;
+                        break;
+                    case '-':
+                        resultado = num1 - num2;
+                        break;
+                    case '*':
+                        resultado = num1 * num2;
+                        break;
+                    case '/':
+                        if (num2 !== 0) {
+                            resultado = num1 / num2;
+                        } else {
+                            resultado = 'Erro';  
+                        }
+                        break;
+                    default:
+                        resultado = atual;
+                }
+                atual = resultado.toString(); 
+                valorAnterior = null;  
+                operador = null;  
+                atualizarVisor();
+            }
+        }
+
+        function limpar() {
+            atual = '';
+            valorAnterior = null;
+            operador = null;
+            atualizarVisor();
+        }
+
+        function atualizarVisor() {
+            var visor = document.getElementById('visor');
+            visor.value = atual;
+        }
+    </script>
+</head>
+<body>
+    <h1>Calculadora</h1>
+
+    <input type="text" id="visor" readonly> 
+
+    <div id="botoes">
+     
+        <input type="button" value="7" id="botao7">
+        <input type="button" value="8" id="botao8">
+        <input type="button" value="9" id="botao9">
+        <input type="button" value="/" id="botaoDivisao">
+
+        <br>
+
+        <input type="button" value="4" id="botao4">
+        <input type="button" value="5" id="botao5">
+        <input type="button" value="6" id="botao6">
+        <input type="button" value="*" id="botaoMultiplicacao">
+
+        <br>
+
+        <input type="button" value="1" id="botao1">
+        <input type="button" value="2" id="botao2">
+        <input type="button" value="3" id="botao3">
+        <input type="button" value="-" id="botaoSubtracao">
+
+        <br>
+
+        <input type="button" value="0" id="botao0">
+        <input type="button" value="." id="botaoPonto">
+        <input type="button" value="C" id="botaoLimpar">
+        <input type="button" value="+" id="botaoSoma">
+
+        <br>
+
+        <input type="button" value="=" id="botaoIgual">
+    </div>
+</body>
+</html>
